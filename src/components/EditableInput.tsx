@@ -12,46 +12,10 @@ interface Props {
     labelFlexDirection?: 'row' | 'column'
 }
 
-const EditableInput: FC<Props> = ({className, placeholder, value, onChange, pdfMode, labelText = '',
-                                      labelFlexDirection = 'row'}) => {
-
-    const InputBox = () => {
-        return (
-            <input
-                type="text"
-                className={'input ' + (className ? className : '')}
-                placeholder={placeholder || ''}
-                value={value || ''}
-                onChange={onChange ? (e) => onChange(e.target.value) : undefined}
-            />
-        )
-    }
-
-    const InputBoxWithLabel = () => {
-        const alignment = labelFlexDirection === 'row' ? 'center' : 'flex-start'
-        return (
-            <div className="input-box-with-label" style={{display: "flex", flexDirection: labelFlexDirection, alignItems: alignment}}>
-                <div style={{marginRight: 10}}>{labelText}</div>
-                <InputBox/>
-            </div>
-        )
-    }
-
-    const EditableInputDraft = () => {
-        return (
-            <div className="editable-input">
-                {labelText ? (
-                    <div className="input-box-with-label" style={{display: "flex", flexDirection: labelFlexDirection, alignItems: alignment}}>
-                        <div style={{marginRight: 10}}>{labelText}</div>
-                        <InputBox/>
-                    </div>
-                ) : (
-                    <InputBox/>
-                )}
-            </div>
-        )
-    }
-
+const EditableInput: FC<Props> = ({
+                                      className, placeholder, value, onChange, pdfMode, labelText = '',
+                                      labelFlexDirection = 'row'
+                                  }) => {
 
     const alignment = labelFlexDirection === 'row' ? 'center' : 'flex-start'
 
@@ -62,8 +26,11 @@ const EditableInput: FC<Props> = ({className, placeholder, value, onChange, pdfM
             ) : (
                 <div className="editable-input">
                     {labelText ? (
-                        <div className="input-box-with-label" style={{display: "flex", flexDirection: labelFlexDirection, alignItems: alignment}}>
-                            <div style={{marginRight: 10}}>{labelText}</div>
+                        <div className="input-box-with-label"
+                             style={{display: "flex", flexDirection: labelFlexDirection, alignItems: alignment}}>
+                            <div style={{marginRight: 10, fontWeight: 600}}>
+                                {labelText}
+                            </div>
                             <input
                                 type="text"
                                 className={'input ' + (className ? className : '')}

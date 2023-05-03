@@ -36,14 +36,16 @@ const InvoicePage: FC<Props> = ({data, pdfMode, onChange}) => {
 
     const dateFormat = 'MMM dd, yyyy'
     const invoiceDate = invoice.invoiceDate !== '' ? new Date(invoice.invoiceDate) : new Date()
-    const invoiceDueDate =
-        invoice.invoiceDueDate !== ''
-            ? new Date(invoice.invoiceDueDate)
-            : new Date(invoiceDate.valueOf())
+    const invoiceDueDate = invoice.invoiceDate !== '' ? new Date(invoice.invoiceDueDate) : new Date()
 
-    if (invoice.invoiceDueDate === '') {
-        invoiceDueDate.setDate(invoiceDueDate.getDate() + 30)
-    }
+    // const invoiceDueDate =
+    //     invoice.invoiceDueDate !== ''
+    //         ? new Date(invoice.invoiceDueDate)
+    //         : new Date(invoiceDate.valueOf())
+    //
+    // if (invoice.invoiceDueDate === '') {
+    //     invoiceDueDate.setDate(invoiceDueDate.getDate() + 30)
+    // }
 
     const handleChange = (name: keyof Invoice, value: string | number) => {
         if (name !== 'productLines') {
@@ -318,6 +320,22 @@ const InvoicePage: FC<Props> = ({data, pdfMode, onChange}) => {
                                     labelFlexDirection={'column'}
                                 />
                             </View>
+
+                            <View pdfMode={pdfMode}  style={{marginTop: 5}}>
+                                <EditableCalendarInput
+                                    value={format(invoiceDueDate, dateFormat)}
+                                    selected={invoiceDueDate}
+                                    onChange={(date) =>
+                                        handleChange(
+                                            'invoiceDate',
+                                            date && !Array.isArray(date) ? format(date, dateFormat) : ''
+                                        )
+                                    }
+                                    pdfMode={pdfMode}
+                                    labelText={'Due Date'}
+                                    labelFlexDirection={'column'}
+                                />
+                            </View>
                         </View>
                     </View>
                 </View>
@@ -474,13 +492,15 @@ const InvoicePage: FC<Props> = ({data, pdfMode, onChange}) => {
                 </View>
 
                 <View className="mt-20" pdfMode={pdfMode}>
-                    <EditableInput
-                        className="bold w-100"
-                        value={invoice.notesLabel}
-                        onChange={(value) => handleChange('notesLabel', value)}
-                        pdfMode={pdfMode}
-                    />
+                    {/*<EditableInput*/}
+                    {/*    className="bold w-100"*/}
+                    {/*    value={invoice.notesLabel}*/}
+                    {/*    onChange={(value) => handleChange('notesLabel', value)}*/}
+                    {/*    pdfMode={pdfMode}*/}
+                    {/*/>*/}
                     <EditableTextarea
+                        labelText={'Notes'}
+                        labelFlexDirection={'column'}
                         className="w-100"
                         rows={2}
                         value={invoice.notes}
@@ -489,17 +509,26 @@ const InvoicePage: FC<Props> = ({data, pdfMode, onChange}) => {
                     />
                 </View>
                 <View className="mt-20" pdfMode={pdfMode}>
-                    <EditableInput
-                        className="bold w-100"
-                        value={invoice.termLabel}
-                        onChange={(value) => handleChange('termLabel', value)}
-                        pdfMode={pdfMode}
-                    />
                     <EditableTextarea
+                        labelText={'Terms and Conditions'}
+                        labelFlexDirection={'column'}
                         className="w-100"
                         rows={2}
                         value={invoice.term}
                         onChange={(value) => handleChange('term', value)}
+                        pdfMode={pdfMode}
+                    />
+                </View>
+
+
+                <View className="mt-20" pdfMode={pdfMode}>
+                    <EditableTextarea
+                        labelText={'Payment Terms'}
+                        labelFlexDirection={'column'}
+                        className="w-100"
+                        rows={2}
+                        value={invoice.term}
+                        onChange={(value) => handleChange('paymentTerms', value)}
                         pdfMode={pdfMode}
                     />
                 </View>
