@@ -18,7 +18,7 @@ function App() {
 
   return (
       <div className="app">
-        <h1 className="center fs-30">Scanpay Invoice Generator</h1>
+        <h1 className="center fs-30">Scanpay Invoice Generator Internal</h1>
         <InvoicePage data={data} onChange={onInvoiceUpdated} />
       </div>
   )
