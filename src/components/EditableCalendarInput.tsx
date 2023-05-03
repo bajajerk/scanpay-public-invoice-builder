@@ -34,7 +34,7 @@ const EditableCalendarInput: FC<Props> = ({className, value, selected, onChange,
         return (
             <div className="input-box-with-label"
                  style={{display: "flex", flexDirection: labelFlexDirection, alignItems: alignment}}>
-                <div style={{marginRight: 10}}>{labelText}</div>
+                <div style={{marginRight: 10, fontWeight: 600}}>{labelText}</div>
                 <InputBox/>
             </div>
         )
